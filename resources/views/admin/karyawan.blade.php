@@ -201,6 +201,7 @@
                                     </tr>
                                 </tfoot>
                             </table>
+
                         </div>
                         <!-- /.card-body -->
                     </div>

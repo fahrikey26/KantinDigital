@@ -167,6 +167,8 @@
                                     </tr>
                                 </tfoot>
                             </table>
+                            <div class="mt-3"><a href="/"><button class="btn btn-success">Lanjut Jajan</button>
+                            </div></a>
                         </div>
                         <!-- /.card-body -->
                     </div>
