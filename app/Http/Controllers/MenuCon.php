@@ -11,7 +11,10 @@ class MenuCon extends Controller
 {
     public function home()
     {
-        $menu = DB::table('menu')->get();
+        $menu = DB::table('menu')
+            ->join('kantin','kantin.id_kantin','=','menu.id_kantin')
+            ->distinct()
+            ->get();
         return view('utama', ['menu' => $menu]);
     }
 

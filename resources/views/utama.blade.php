@@ -106,7 +106,7 @@
                         <ul id="portfolio-flters">
                             <li data-filter="*" class="filter-active">All</li>
                             @foreach ($menu as $p)
-                                <li data-filter=".{{ $p->id_kantin }}">{{ $p->id_kantin }}</li>
+                                <li data-filter=".{{ $p->id_kantin }}">{{ $p->nama_kantin }}</li>
                             @endforeach
                         </ul>
                     </div>

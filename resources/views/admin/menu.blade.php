@@ -44,9 +44,9 @@
                                                 @endif
                                             </td>
                                         </tr>
-                                        <!-- Ini tampil form update user -->
+                                        <!-- Ini tampil form update menu -->
                                         <div class="modal fade" id="ModalUpdate{{ $k->id_menu }}" tabindex="-1"
-                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -141,7 +141,7 @@
 
                                     <!-- Ini tampil form tambah user -->
                                     <div class="modal fade" id="ModalTambah" tabindex="-1"
-                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">

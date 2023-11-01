@@ -5,11 +5,12 @@
     <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 
+    <button class="btn btn-info" data-toggle="modal" data-target="#databayar">Scan Data Bayar</button>
+
     <section class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-
                     <div class="card-body">
                         @if (session('message'))
                             <div class="alert alert-danger mt-3">
@@ -43,7 +44,12 @@
                                         <td class="text-center">
                                             <div class="text-left"><b><i>Waktu Jajan : {{ $k->created_at }}</i></b>
                                             </div>
-                                            <div class="text-left"><b><i>Kode Transaksi : {{ $k->id_transaksi }}</i></b>
+                                            <div class="text-left"><b><i>Kode Transaksi :
+                                                        {{ $k->id_transaksi }}</i></b>
+                                                @if (Auth::user()->role != 'pedagang')
+                                                    <br><button class="btn btn-info" data-toggle="modal"
+                                                        data-target="#barcode{{ $k->id_transaksi }}">QR Code</button>
+                                                @endif
                                             </div>
                                             <hr>
                                             @if (Auth::user()->role != 'karyawan')
@@ -148,6 +154,46 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <!-- Ini tampil barcode QR -->
+                                    <div class="modal fade" id="barcode{{ $k->id_transaksi }}" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">QR
+                                                        Code<br><b>{{ $k->id_transaksi }}</b></h1>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body text-center">
+                                                    {!! QrCode::size(300)->generate($k->id_transaksi) !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Ini tampil camera scanner -->
+                                    <div class="modal fade" id="databayar" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Camera Scanner
+                                                    </h1>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body text-center">
+                                                    <div id="reader" width="600px"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 @endforeach
 
                                 <!-- Ini tampil form tambah user -->
@@ -226,7 +272,35 @@
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
-    <script type="text/javascript">
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <script script type="text/javascript">
         new DataTable('#example');
+
+        function onScanSuccess(decodedText, decodedResult) {
+            // handle the scanned code as you like, for example:
+            //console.log(`Code matched = ${decodedText}`, decodedResult);
+            var a = document.getElementById("hasil");
+            a.value = decodedText;
+            var id = a.value;
+            window.location = '/transaksi/tampil/' + '${id}' + '/edit';
+        }
+
+        function onScanFailure(error) {
+            // handle scan failure, usually better to ignore and keep scanning.
+            // for example:
+            //console.warn(`Code scan error = ${error}`);
+        }
+
+        let html5QrcodeScanner = new Html5QrcodeScanner(
+            "reader", {
+                fps: 10,
+                qrbox: {
+                    width: 250,
+                    height: 250
+                }
+            },
+            /* verbose= */
+            false);
+        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
     </script>
 @endsection
