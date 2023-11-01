@@ -95,6 +95,7 @@
                                         <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
                                     </h3>
                                     <p class="text-sm">{{ Auth::user()->email }}</p>
+                                    <p class="text-sm">{{ Auth::user()->role }}</p>
                                 </div>
                             </div><a class="text-sm m-2" href="{{ route('actionlogout') }}">LogOut</a>
                             <!-- Message End -->
@@ -127,7 +128,11 @@
                     </div>
                     <div class="info">
                         <a href="#" class="d-block">{{ Auth::user()->name }}
-                            <b>({{ Auth::user()->role }})</b></a>
+                            <b>({{ Auth::user()->role }})</b>
+                            @if (Auth::user()->role != 'pedagang')
+                                <br>Poin : {{ $poinkaryawan->point }}
+                        </a>
+                        @endif
                     </div>
                 </div>
 
@@ -186,6 +191,8 @@
                                             <p>Kantin</p>
                                         </a>
                                     </li>
+                                @endif
+                                @if (Auth::user()->role != 'karyawan')
                                     <li class="nav-item">
                                         <a href="/menu/tampil" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
@@ -235,59 +242,59 @@
                 <div class="container-fluid">
                     <!-- Small boxes (Stat box) -->
                     <div class="row">
-                        <div class="col-lg-3 col-6">
-                            <!-- small box -->
-                            <div class="small-box bg-info">
-                                <div class="inner">
-                                    <h3>{{ $jmlkaryawan }}</h3>
+                        @if (Auth::user()->role == 'admin')
+                            <div class="col-lg-3 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-info">
+                                    <div class="inner">
+                                        <h3>{{ $jmlkaryawan }}</h3>
 
-                                    <p>Karyawan</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-bag"></i>
-                                </div>
-                                @if (Auth::user()->role == 'admin')
+                                        <p>Karyawan</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion ion-bag"></i>
+                                    </div>
                                     <a href="/karyawan/tampil" class="small-box-footer">More info <i
                                             class="fas fa-arrow-circle-right"></i></a>
-                                @endif
+                                </div>
                             </div>
-                        </div>
+                        @endif
                         <!-- ./col -->
-                        <div class="col-lg-3 col-6">
-                            <!-- small box -->
-                            <div class="small-box bg-success">
-                                <div class="inner">
-                                    <h3>{{ $jmlkantin }}</h3>
+                        @if (Auth::user()->role == 'admin')
+                            <div class="col-lg-3 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-success">
+                                    <div class="inner">
+                                        <h3>{{ $jmlkantin }}</h3>
 
-                                    <p>Kantin</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-stats-bars"></i>
-                                </div>
-                                @if (Auth::user()->role == 'admin')
+                                        <p>Kantin</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion ion-stats-bars"></i>
+                                    </div>
                                     <a href="/kantin/tampil" class="small-box-footer">More info <i
                                             class="fas fa-arrow-circle-right"></i></a>
-                                @endif
+                                </div>
                             </div>
-                        </div>
+                        @endif
                         <!-- ./col -->
-                        <div class="col-lg-3 col-6">
-                            <!-- small box -->
-                            <div class="small-box bg-warning">
-                                <div class="inner">
-                                    <h3>{{ $jmlmenu }}</h3>
+                        @if (Auth::user()->role != 'karyawan')
+                            <div class="col-lg-3 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-warning">
+                                    <div class="inner">
+                                        <h3>{{ $jmlmenu }}</h3>
 
-                                    <p>Menu Makanan</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-person-add"></i>
-                                </div>
-                                @if (Auth::user()->role == 'admin')
+                                        <p>Menu Makanan</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion ion-person-add"></i>
+                                    </div>
                                     <a href="/menu/tampil" class="small-box-footer">More info <i
                                             class="fas fa-arrow-circle-right"></i></a>
-                                @endif
+                                </div>
                             </div>
-                        </div>
+                        @endif
 
                         <div class="col-lg-3 col-6">
                             <!-- small box -->

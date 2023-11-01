@@ -49,7 +49,9 @@
                                 <b class="text-primary">{{ Auth::user()->email }}</b>
                             </a>
                             <ul class="dropdown-menu">
-                                <li class="p-2 bg-info text-bold">Level: {{ Auth::user()->role }}</li>
+                                <li class="p-2 text-bold">Status : <b>{{ Auth::user()->role }}</b></li>
+                                <li class="p-2 text-bold"><a href="/dashboard"><button
+                                            class="btn btn-success">Dashboard</button></a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>

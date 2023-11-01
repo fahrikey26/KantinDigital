@@ -2,6 +2,9 @@
 @section('judul', 'Karyawan')
 @section('konten')
 
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
     <section class="content">
         <div class="container-fluid">
             <div class="row">
@@ -15,7 +18,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="example1" class="table table-bordered table-striped">
+                            <table id="example" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>Data Karyawan</th>
@@ -40,7 +43,7 @@
                                                     data-target="#ModalDelete{{ $k->id_karyawan }}">Delete</button>
                                             </td>
                                         </tr>
-                                        <!-- Ini tampil form update user -->
+                                        <!-- Ini tampil form update karyawan -->
                                         <div class="modal fade" id="ModalUpdate{{ $k->id_karyawan }}" tabindex="-1"
                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
@@ -89,7 +92,7 @@
                                             </div>
                                         </div>
 
-                                        <!-- Ini tampil form delete user -->
+                                        <!-- Ini tampil form delete karyawan -->
                                         <div class="modal fade" id="ModalDelete{{ $k->id_karyawan }}" tabindex="-1"
                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
@@ -125,13 +128,13 @@
                                         </div>
                                     @endforeach
 
-                                    <!-- Ini tampil form tambah user -->
+                                    <!-- Ini tampil form tambah karyawan -->
                                     <div class="modal fade" id="ModalTambah" tabindex="-1"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah User
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Karyawan
                                                     </h1>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
@@ -142,14 +145,6 @@
                                                     <form action="/karyawan/storeinput" method="post"
                                                         class="form-floating" enctype="multipart/form-data">
                                                         @csrf
-                                                        <div class="form-floating p-1">
-                                                            <label for="floatingInputValue">ID Karyawan</label>
-                                                            <input type="text" name="idkaryawan" required="required"
-                                                                class="form-control">
-                                                            @foreach ($errors->get('idkaryawan') as $error)
-                                                                <span class="help-block">{{ $error }}</span>
-                                                            @endforeach
-                                                        </div>
                                                         <div class="form-floating p-1">
                                                             <label for="floatingInputValue">Nama</label>
                                                             <input type="text" name="nama" required="required"
@@ -168,12 +163,12 @@
                                                                 class="form-control">
 
                                                         </div>
-                                                        <div class="form-floating p-1">
-                                                            <label for="floatingInputValue">Poin</label>
-                                                            <input type="number" name="poin" required="required"
-                                                                class="form-control">
+                                                        <!--<div class="form-floating p-1">
+                                                                <label for="floatingInputValue">Poin</label>
+                                                                <input type="number" name="poin" required="required"
+                                                                    class="form-control">
 
-                                                        </div>
+                                                            </div>-->
                                                         <div class="form-floating p-1">
                                                             <label for="floatingInputValue">Foto</label>
                                                             <input type="file" name="foto" required="required"
@@ -214,7 +209,10 @@
         <!-- /.container-fluid -->
     </section>
 
-    </body>
-
-    </html>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript">
+        new DataTable('#example');
+    </script>
 @endsection

@@ -2,6 +2,9 @@
 @section('judul', 'Menu')
 @section('konten')
 
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
     <section class="content">
         <div class="container-fluid">
             <div class="row">
@@ -15,7 +18,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="example1" class="table table-bordered table-striped">
+                            <table id="example" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>Data Menu</th>
@@ -27,16 +30,18 @@
                                     @foreach ($menu as $k)
                                         <tr>
                                             <td class="text-center">
-                                                {{ $k->id_menu }}<br>{{ $k->id_kantin }}<br><b>{{ $k->nama_menu }}</b><br>
-                                                <img src="/assets/img/{{ $k->foto }}" alt="" width="90px"
-                                                    height="120px">
+                                                {{ $k->id_menu }}<br>Kantin {{ $k->nama_kantin }}
                                             </td>
-                                            <td class="text-center">{{ $k->point }}</td>
+                                            <td class="text-center"><b>{{ $k->nama_menu }}</b><br><img
+                                                    src="/assets/img/{{ $k->foto }}" alt="" width="90px"
+                                                    height="120px"><br>Harga : {{ $k->point }} poin</td>
                                             <td class="text-center">
                                                 <button class="btn btn-info" data-toggle="modal"
                                                     data-target="#ModalUpdate{{ $k->id_menu }}">Update</button>
-                                                <button class="btn btn-danger" data-toggle="modal"
-                                                    data-target="#ModalDelete{{ $k->id_menu }}">Delete</button>
+                                                @if (Auth::user()->role == 'admin')
+                                                    <button class="btn btn-danger" data-toggle="modal"
+                                                        data-target="#ModalDelete{{ $k->id_menu }}">Delete</button>
+                                                @endif
                                             </td>
                                         </tr>
                                         <!-- Ini tampil form update user -->
@@ -66,8 +71,12 @@
                                                             </div>
                                                             <div class="form-floating p-1">
                                                                 <label for="floatingInputValue">Nama Kantin</label>
-                                                                <input type="text" name="idkantin" required="required"
-                                                                    class="form-control" value="{{ $k->id_kantin }}">
+                                                                <select name="idkantin" class="form-control">
+                                                                    @foreach ($kantin as $ka)
+                                                                        <option value="{{ $ka->id_kantin }}">
+                                                                            {{ $ka->nama_kantin }}</option>
+                                                                    @endforeach
+                                                                </select>
 
                                                             </div>
                                                             <div class="form-floating p-1">
@@ -147,70 +156,72 @@
                                                     <form action="/menu/storeinput" method="post" class="form-floating"
                                                         enctype="multipart/form-data">
                                                         @csrf
-                                                        <div class="form-floating p-1">
-                                                            <label for="floatingInputValue">ID menu</label>
-                                                            <input type="text" name="idmenu" required="required"
-                                                                class="form-control">
-
-                                                        </div>
-                                                        <div class="form-floating p-1">
-                                                            <label for="floatingInputValue">Nama Menu</label>
-                                                            <input type="text" name="nama" required="required"
-                                                                class="form-control">
-
-                                                        </div>
-                                                        <div class="form-floating p-1">
-                                                            <label for="floatingInputValue">Nama Kantin</label>
-                                                            <input type="text" name="idkantin" required="required"
-                                                                class="form-control">
-
-                                                        </div>
-                                                        <div class="form-floating p-1">
-                                                            <label for="floatingInputValue">Poin</label>
-                                                            <input type="number" name="point" required="required"
-                                                                class="form-control">
-
-                                                        </div>
-                                                        <div class="form-floating p-1">
-                                                            <label for="floatingInputValue">Foto</label>
-                                                            <input type="file" name="foto" required="required"
-                                                                class="form-control">
-
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">Close</button>
-                                                            <button type="submit" class="btn btn-primary">Save
-                                                                changes</button>
-                                                        </div>
-                                                    </form>
                                                 </div>
+                                                <div class="form-floating p-1">
+                                                    <label for="floatingInputValue">Nama Menu</label>
+                                                    <input type="text" name="nama" required="required"
+                                                        class="form-control">
+
+                                                </div>
+                                                <div class="form-floating p-1">
+                                                    <label for="floatingInputValue">Nama Kantin</label>
+                                                    <select name="idkantin" class="form-control">
+                                                        @foreach ($kantin as $ka)
+                                                            <option value="{{ $ka->id_kantin }}">
+                                                                {{ $ka->nama_kantin }}</option>
+                                                        @endforeach
+                                                    </select>
+
+                                                </div>
+                                                <div class="form-floating p-1">
+                                                    <label for="floatingInputValue">Poin</label>
+                                                    <input type="number" name="point" required="required"
+                                                        class="form-control">
+
+                                                </div>
+                                                <div class="form-floating p-1">
+                                                    <label for="floatingInputValue">Foto</label>
+                                                    <input type="file" name="foto" required="required"
+                                                        class="form-control">
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Save
+                                                        changes</button>
+                                                </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
-
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>Data menu</th>
-                                        <th>Poin</th>
-                                        <th>Opsi</th>
-                                    </tr>
-                                </tfoot>
-                            </table>
                         </div>
-                        <!-- /.card-body -->
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Data menu</th>
+                                <th>Poin</th>
+                                <th>Opsi</th>
+                            </tr>
+                        </tfoot>
+                        </table>
                     </div>
-                    <!-- /.card -->
+                    <!-- /.card-body -->
                 </div>
-                <!-- /.col -->
+                <!-- /.card -->
             </div>
-            <!-- /.row -->
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
         </div>
         <!-- /.container-fluid -->
     </section>
 
-    </body>
-
-    </html>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript">
+        new DataTable('#example');
+    </script>
 @endsection

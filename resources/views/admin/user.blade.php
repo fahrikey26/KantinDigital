@@ -2,6 +2,9 @@
 @section('judul', 'User')
 @section('konten')
 
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
     <section class="content">
         <div class="container-fluid">
             <div class="row">
@@ -15,9 +18,10 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="example1" class="table table-bordered table-striped">
+                            <table id="example" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
+                                        <th>Foto</th>
                                         <th>Data</th>
                                         <th>Opsi</th>
                                     </tr>
@@ -26,16 +30,21 @@
                                     @foreach ($user as $k)
                                         <tr>
                                             <td class="text-center">
-                                                {{ $k->name }}<br>
-                                                {{ $k->email }}<br>
                                                 <img src="/assets/img/{{ $k->foto }}" alt="" width="90px"
                                                     height="120px">
                                             </td>
                                             <td class="text-center">
+                                                <b>Nama : {{ $k->name }}</b><br>
+                                                Email : {{ $k->email }}<br>
+                                                Status : {{ $k->role }}
+                                            </td>
+                                            <td class="text-center">
                                                 <button class="btn btn-info" data-toggle="modal"
                                                     data-target="#ModalUpdate{{ $k->id }}">Update</button>
-                                                <button class="btn btn-danger" data-toggle="modal"
-                                                    data-target="#ModalDelete{{ $k->id }}">Delete</button>
+                                                @if (Auth::user()->id == '$k->id')
+                                                    <button class="btn btn-danger" data-toggle="modal"
+                                                        data-target="#ModalDelete{{ $k->id }}">Delete</button>
+                                                @endif
                                             </td>
                                         </tr>
                                         <!-- Ini tampil form update user -->
@@ -184,6 +193,7 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
+                                        <th>Foto</th>
                                         <th>Data</th>
                                         <th>Opsi</th>
                                     </tr>
@@ -201,7 +211,10 @@
         <!-- /.container-fluid -->
     </section>
 
-    </body>
-
-    </html>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript">
+        new DataTable('#example');
+    </script>
 @endsection

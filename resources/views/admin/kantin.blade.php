@@ -2,6 +2,9 @@
 @section('judul', 'Kantin')
 @section('konten')
 
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
     <section class="content">
         <div class="container-fluid">
             <div class="row">
@@ -15,7 +18,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="example1" class="table table-bordered table-striped">
+                            <table id="example" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>Data kantin</th>
@@ -26,7 +29,8 @@
                                 <tbody>
                                     @foreach ($kantin as $k)
                                         <tr>
-                                            <td class="text-center">{{ $k->id_kantin }}<br><b>{{ $k->nama_kantin }}</b></td>
+                                            <td class="text-center">{{ $k->id_kantin }}<br><b>Kantin
+                                                    {{ $k->nama_kantin }}</b></td>
                                             <td class="text-center">{{ $k->pemilik }}</td>
                                             <td class="text-center">
                                                 <button class="btn btn-info" data-toggle="modal"
@@ -35,7 +39,7 @@
                                                     data-target="#ModalDelete{{ $k->id_kantin }}">Delete</button>
                                             </td>
                                         </tr>
-                                        <!-- Ini tampil form update user -->
+                                        <!-- Ini tampil form update kantin -->
                                         <div class="modal fade" id="ModalUpdate{{ $k->id_kantin }}" tabindex="-1"
                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
@@ -78,7 +82,7 @@
                                             </div>
                                         </div>
 
-                                        <!-- Ini tampil form delete user -->
+                                        <!-- Ini tampil form delete kantin -->
                                         <div class="modal fade" id="ModalDelete{{ $k->id_kantin }}" tabindex="-1"
                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
@@ -113,7 +117,7 @@
                                         </div>
                                     @endforeach
 
-                                    <!-- Ini tampil form tambah user -->
+                                    <!-- Ini tampil form tambah kantin -->
                                     <div class="modal fade" id="ModalTambah" tabindex="-1"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -131,12 +135,6 @@
                                                         class="form-floating" enctype="multipart/form-data">
                                                         @csrf
                                                         <div class="form-floating p-1">
-                                                            <label for="floatingInputValue">ID kantin</label>
-                                                            <input type="text" name="idkantin" required="required"
-                                                                class="form-control">
-
-                                                        </div>
-                                                        <div class="form-floating p-1">
                                                             <label for="floatingInputValue">Nama Kantin</label>
                                                             <input type="text" name="nama" required="required"
                                                                 class="form-control">
@@ -145,6 +143,24 @@
                                                         <div class="form-floating p-1">
                                                             <label for="floatingInputValue">Pemilik</label>
                                                             <input type="text" name="pemilik" required="required"
+                                                                class="form-control">
+
+                                                        </div>
+                                                        <div class="form-floating p-1">
+                                                            <label for="floatingInputValue">Email</label>
+                                                            <input type="email" name="email" required="required"
+                                                                class="form-control">
+
+                                                        </div>
+                                                        <div class="form-floating p-1">
+                                                            <label for="floatingInputValue">Password</label>
+                                                            <input type="password" name="password" required="required"
+                                                                class="form-control">
+
+                                                        </div>
+                                                        <div class="form-floating p-1">
+                                                            <label for="floatingInputValue">Foto</label>
+                                                            <input type="file" name="foto" required="required"
                                                                 class="form-control">
 
                                                         </div>
@@ -181,7 +197,10 @@
         <!-- /.container-fluid -->
     </section>
 
-    </body>
-
-    </html>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript">
+        new DataTable('#example');
+    </script>
 @endsection

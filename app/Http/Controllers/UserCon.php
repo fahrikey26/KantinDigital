@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Session;
 
 class UserCon extends Controller
@@ -13,11 +14,15 @@ class UserCon extends Controller
     {
 
         $jmlkaryawan = DB::table('karyawan')->count();
+        $poinkaryawan = DB::table('karyawan')
+        ->select('karyawan.point')
+        ->where('id_karyawan',Auth::user()->id_karyawan)
+        ->first();
         $jmlkantin = DB::table('kantin')->count();
         $jmlmenu = DB::table('menu')->count();
         $jmltransaksi = DB::table('transaksi')->count();
         $user = DB::table('users')->get();
-        return view('admin.user', ['user' => $user, 'jmlkaryawan' => $jmlkaryawan,'jmlkantin' => $jmlkantin,'jmlmenu' => $jmlmenu,'jmltransaksi' => $jmltransaksi]);
+        return view('admin.user', ['poinkaryawan'=>$poinkaryawan,'user' => $user, 'jmlkaryawan' => $jmlkaryawan,'jmlkantin' => $jmlkantin,'jmlmenu' => $jmlmenu,'jmltransaksi' => $jmltransaksi]);
     }
 
     public function storeinput(Request $request)
