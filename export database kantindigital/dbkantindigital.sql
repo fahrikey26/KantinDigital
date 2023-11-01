@@ -1,3 +1,22 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Waktu pembuatan: 01 Nov 2023 pada 01.26
+-- Versi server: 10.4.27-MariaDB
+-- Versi PHP: 8.2.0
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
 --
 -- Database: `dbkantindigital`
 --
@@ -38,10 +57,10 @@ CREATE TABLE `kantin` (
 --
 
 INSERT INTO `kantin` (`id`, `id_kantin`, `nama_kantin`, `pemilik`, `created_at`, `updated_at`) VALUES
-(1, 'Kan001', 'Ayam Geprek', 'Mama Dedeh', NULL, NULL),
-(2, 'Kan002', 'Mie Ayam Baso', 'Teh Elis', NULL, NULL),
-(3, 'Kan003', 'Ketoprak', 'Mba Ani', '2023-10-29 17:00:00', NULL),
-(5, 'Kan004', 'Minuman Es', 'Mba Sri', '2023-10-29 17:00:00', NULL);
+(10, 'Kan001', 'Baso', 'Ali', '2023-10-31 15:43:39', NULL),
+(11, 'Kan002', 'Mie Ayam', 'Juli', '2023-10-31 15:47:29', NULL),
+(12, 'Kan003', 'Ketoprak', 'Narisa', '2023-10-31 15:48:16', NULL),
+(13, 'Kan004', 'Ayam', 'Siti', '2023-10-31 15:48:49', NULL);
 
 -- --------------------------------------------------------
 
@@ -64,11 +83,10 @@ CREATE TABLE `karyawan` (
 --
 
 INSERT INTO `karyawan` (`id`, `id_karyawan`, `nama_karyawan`, `foto`, `point`, `created_at`, `updated_at`) VALUES
-(1, 'Kar001', 'Asep', 'Asep.png', 1000, NULL, '2023-10-29 17:00:00'),
-(2, 'Kar002', 'Cecep', 'Cecep.jpg', 500, NULL, '2023-10-29 17:00:00'),
-(9, 'Kar003', 'Udin', 'Udin.png', 50, '2023-10-29 17:00:00', NULL),
-(10, 'Kar004', 'Ali', 'Ali.jpg', 100, '2023-10-30 17:00:00', NULL),
-(12, 'Kar005', 'Aisyah', 'Aisyah.jpg', 50, '2023-10-30 17:00:00', NULL);
+(1, 'Kar001', 'Asep', 'Asep.jpg', 990, NULL, '2023-10-31 15:40:12'),
+(17, 'Kar002', 'ZULFAHRIZAL', 'ZULFAHRIZAL.jpg', 0, '2023-10-31 15:41:16', '2023-10-31 16:37:27'),
+(18, 'Kar003', 'Nur Aisyah', 'Nur Aisyah.jpg', 2, '2023-10-31 15:42:35', '2023-10-31 17:14:36'),
+(19, 'Kar004', 'Anisa', 'Anisa.jpg', 46, '2023-10-31 17:16:18', '2023-10-31 17:18:19');
 
 -- --------------------------------------------------------
 
@@ -92,9 +110,14 @@ CREATE TABLE `menu` (
 --
 
 INSERT INTO `menu` (`id`, `id_menu`, `nama_menu`, `id_kantin`, `point`, `foto`, `created_at`, `updated_at`) VALUES
-(1, 'Menu001', 'Ayam Geprek', 'Kan001', 10, 'Ayam Geprek.jpg', '2023-10-29 17:00:00', NULL),
-(2, 'Menu002', 'Mie Ayam Baso', 'Kan002', 11, 'Mie Ayam Baso.jpg', '2023-10-29 17:00:00', NULL),
-(4, 'Menu003', 'Es Manis', 'Kan004', 5, 'Es Manis.jpg', '2023-10-29 17:00:00', NULL);
+(8, 'Menu001', 'Baso Malang', 'Kan001', 12, 'Baso Malang.jpg', '2023-10-30 17:00:00', NULL),
+(9, 'Menu002', 'Baso Setan', 'Kan001', 15, 'Baso Setan.jpg', '2023-10-30 17:00:00', NULL),
+(10, 'Menu003', 'Baso Urat', 'Kan001', 12, 'Baso Urat.jpg', '2023-10-30 17:00:00', NULL),
+(11, 'Menu004', 'Ketoprak Telor', 'Kan003', 10, 'Ketoprak Telor.jpg', '2023-10-30 17:00:00', NULL),
+(12, 'Menu005', 'Ketoprak Biasa', 'Kan003', 8, 'Ketoprak Biasa.jpg', '2023-10-30 17:00:00', NULL),
+(13, 'Menu006', 'Ayam Geprek', 'Kan004', 15, 'Ayam Geprek.jpg', '2023-10-30 17:00:00', NULL),
+(14, 'Menu007', 'Ayam Bakar', 'Kan004', 15, 'Ayam Bakar.jpg', '2023-10-30 17:00:00', NULL),
+(15, 'Menu008', 'Ayam Goreng', 'Kan004', 15, 'Ayam Goreng.jpeg', '2023-10-30 17:00:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -164,6 +187,8 @@ CREATE TABLE `transaksi` (
   `id_transaksi` varchar(255) NOT NULL,
   `id_karyawan` varchar(255) NOT NULL,
   `id_menu` varchar(255) NOT NULL,
+  `banyak` int(11) NOT NULL,
+  `jumlahpoin` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -172,10 +197,11 @@ CREATE TABLE `transaksi` (
 -- Dumping data untuk tabel `transaksi`
 --
 
-INSERT INTO `transaksi` (`id`, `id_transaksi`, `id_karyawan`, `id_menu`, `created_at`, `updated_at`) VALUES
-(1, 'Trans001', 'Kar001', 'Menu001', NULL, NULL),
-(2, 'Trans002', 'Kar002', 'Menu002', NULL, NULL),
-(4, 'Trans003', 'Kar003', 'Menu003', '2023-10-29 17:00:00', NULL);
+INSERT INTO `transaksi` (`id`, `id_transaksi`, `id_karyawan`, `id_menu`, `banyak`, `jumlahpoin`, `created_at`, `updated_at`) VALUES
+(21, 'Trans001', 'Kar002', 'Menu004', 1, 10, '2023-10-31 16:37:27', NULL),
+(22, 'Trans002', 'Kar003', 'Menu005', 1, 8, '2023-10-31 17:14:36', NULL),
+(23, 'Trans003', 'Kar004', 'Menu008', 2, 30, '2023-10-31 17:18:02', NULL),
+(24, 'Trans004', 'Kar004', 'Menu003', 2, 24, '2023-10-31 17:18:19', NULL);
 
 -- --------------------------------------------------------
 
@@ -191,6 +217,7 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `foto` text NOT NULL,
   `role` varchar(30) NOT NULL,
+  `id_karyawan` varchar(255) NOT NULL,
   `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -200,10 +227,15 @@ CREATE TABLE `users` (
 -- Dumping data untuk tabel `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `foto`, `role`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'admin@admin.com', NULL, '$2y$10$16q0HHT6DOX3jARdWA/k6Oz/9mG5jTZ5/s4p53fWmGJQMmBfFP8DK', 'admin.jpeg', 'admin', NULL, '2023-10-29 17:00:00', NULL),
-(2, 'zoel', 'zoel@zoel.com', NULL, '$2y$10$7azhQs543y8kycFgQK/XFe546k0rbxHHN9Tb0NtbRKVsLuGGqn18K', 'zoel.png', 'karyawan', NULL, '2023-10-29 17:00:00', NULL),
-(3, 'Aisyah', 'aisyah@aisyah.com', NULL, '$2y$10$TaatMCplhjo.Lyhkb2tD2emCKPY7RwzZ292p1sCheopP/cpYW13yK', 'Aisyah.jpg', 'karyawan', NULL, '2023-10-30 17:00:00', NULL);
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `foto`, `role`, `id_karyawan`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'admin', 'admin@admin.com', NULL, '$2y$10$16q0HHT6DOX3jARdWA/k6Oz/9mG5jTZ5/s4p53fWmGJQMmBfFP8DK', 'admin.jpg', 'admin', 'Kar001', NULL, '2023-10-30 17:00:00', NULL),
+(9, 'ZULFAHRIZAL', 'fahrikey26@gmail.com', NULL, '$2y$10$XsgmkU6Z.h0lklTgGvBB5OL3bzwsyIheqmY6eMnvHNO9m7anTzc7u', 'ZULFAHRIZAL.jpg', 'karyawan', 'Kar002', NULL, '2023-10-31 15:41:16', NULL),
+(10, 'Nur Aisyah', 'nur@gmail.com', NULL, '$2y$10$oh..XJtA0PdLtvVyGPPnrO5ae81jpDOw4bvwZVW/8C.LFMpTfTEKa', 'Nur Aisyah.jpg', 'karyawan', 'Kar003', NULL, '2023-10-31 15:42:35', NULL),
+(11, 'Ali', 'ali@gmail.com', NULL, '$2y$10$4p9EDTN3ouAnTpyUJNlzUeQPmjuc1ZBddeO76yBhO5S6UKZu3Q806', 'Baso.jpg', 'pedagang', 'Kan001', NULL, '2023-10-31 15:43:39', NULL),
+(12, 'Juli', 'juli@gmail.com', NULL, '$2y$10$EA2U9scUQeGLvDTLGTg0WeNX/Pl4iCUFi6mH/QCHKaJqXBCZwakdi', 'Mie Ayam.jpg', 'pedagang', 'Kan002', NULL, '2023-10-31 15:47:29', NULL),
+(13, 'Narisa', 'nari@gmail.com', NULL, '$2y$10$RPdwgBi/aOzhNm3GUtdVNOx/d6GhgA.D9gFbQSoaD2GjSx2a4AzJC', 'Ketoprak.jpg', 'pedagang', 'Kan003', NULL, '2023-10-31 15:48:17', NULL),
+(14, 'Siti', 'siti@gmail.com', NULL, '$2y$10$SPSk5GKUyT0WBvhfvroUgOZ4tA0/903WKiBOJlzPNxKPr9x2XPkMS', 'Ayam.jpg', 'pedagang', 'Kan004', NULL, '2023-10-31 15:48:49', NULL),
+(15, 'Anisa', 'anisa@gmail.com', NULL, '$2y$10$Ft1WEhx8TvKRZLNjeFwzzOVT5OFF1Kkly6L2ck3h4pkG9ZpqsgBzK', 'Anisa.jpg', 'karyawan', 'Kar004', NULL, '2023-10-31 17:16:18', NULL);
 
 --
 -- Indexes for dumped tables
@@ -285,19 +317,19 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT untuk tabel `kantin`
 --
 ALTER TABLE `kantin`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT untuk tabel `karyawan`
 --
 ALTER TABLE `karyawan`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT untuk tabel `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT untuk tabel `migrations`
@@ -315,11 +347,15 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT untuk tabel `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
